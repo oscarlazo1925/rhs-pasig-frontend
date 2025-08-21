@@ -9,7 +9,7 @@ function AppNavbar({ user, handleGoogleLogin, handleLogout, loginText }) {
       <Container>
         {/* Brand */}
         <Navbar.Brand as={Link} to="/">
-          MyApp
+          RHS-PASIG
         </Navbar.Brand>
 
         {/* Home beside MyApp */}
