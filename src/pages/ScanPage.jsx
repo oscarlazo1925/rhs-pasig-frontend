@@ -16,7 +16,7 @@ export default function ScanPage() {
   const [mode, setMode] = useState("keyboard"); // "keyboard" | "camera"
   const [value, setValue] = useState("");
   const [lastCode, setLastCode] = useState("");
-  const [history, setHistory] = useState([]);
+
   const timeoutRef = useRef(null);
   const scannerRef = useRef(null);
 
@@ -43,7 +43,7 @@ export default function ScanPage() {
         scannerRef.current.render(
           (decodedText) => {
             setLastCode(decodedText);
-            setHistory((h) => [decodedText, ...h].slice(0, 10));
+
           },
           (errorMessage) => {
             console.log("Scan error:", errorMessage);
@@ -68,7 +68,7 @@ export default function ScanPage() {
     timeoutRef.current = setTimeout(() => {
       if (v.trim()) {
         setLastCode(v.trim());
-        setHistory((h) => [v.trim(), ...h].slice(0, 10));
+
         setValue("");
       }
     }, 200);
@@ -81,7 +81,7 @@ export default function ScanPage() {
       const code = value.trim();
       if (code) {
         setLastCode(code);
-        setHistory((h) => [code, ...h].slice(0, 10));
+
         setValue("");
       }
     }
@@ -175,7 +175,7 @@ export default function ScanPage() {
                 </>
               ) : (
                 <Alert variant="danger">
-                  ❌ No data found for this QR code
+                  No data found for this QR code
                 </Alert>
               )}
               <hr />
@@ -222,7 +222,7 @@ export default function ScanPage() {
                     const code = e.target.value.trim();
                     if (code) {
                       setLastCode(code);
-                      setHistory((h) => [code, ...h].slice(0, 10));
+
                       setValue("");
                     }
                   }
@@ -242,7 +242,7 @@ export default function ScanPage() {
                 onClick={() => inputRef.current?.focus()}
                 disabled={isScanning}
               >
-                {isScanning ? "🔍 Searching..." : "⌨️ Tap to Scan (Keyboard)"}
+                {isScanning ? "Searching..." : "Tap to Scan (Keyboard)"}
               </Button>
             </div>
           )}
@@ -267,18 +267,7 @@ export default function ScanPage() {
             </Alert>
           )}
 
-          {/* {history.length > 0 && (
-            <div className="text-start mt-3">
-              <div className="fw-semibold mb-2">Recent scans</div>
-              <ul className="list-unstyled small mb-0">
-                {history.map((c, i) => (
-                  <li key={i} className="py-1 border-bottom">
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )} */}
+
         </Card>
       </Container>
     </>
