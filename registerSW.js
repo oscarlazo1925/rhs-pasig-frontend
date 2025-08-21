@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/rhs-pasig-frontend/sw.js', { scope: '/rhs-pasig-frontend/' })})}
