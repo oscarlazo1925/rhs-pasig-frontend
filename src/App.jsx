@@ -8,9 +8,11 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import Profile from "./pages/Profile";
 import NavbarTop from "./components/NavbarTop";
+import ScanPage from "./pages/ScanPage";
+
 
 function Home({ user, handleGoogleLogin, loginText }) {
-  console.log(loginText, 'loginText')
+  console.log(loginText, "loginText");
   return (
     <Container
       className="d-flex justify-content-center align-items-center"
@@ -19,27 +21,29 @@ function Home({ user, handleGoogleLogin, loginText }) {
       <Card className="p-4 shadow-lg" style={{ width: "400px" }}>
         <h3 className="text-center mb-4">Welcome</h3>
         {!user ? (
-          <Button
-            variant="danger"
-            onClick={handleGoogleLogin}
-            className="w-100"
-            disabled={loginText} // 🔹 disable while logging in
-          >
-            {loginText ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />{" "}
-                Logging in...
-              </>
-            ) : (
-              "Sign in with Google"
-            )}
-          </Button>
+          <div className="d-flex justify-content-center">
+            <Button
+              variant="danger"
+              onClick={handleGoogleLogin}
+              className="w-50"
+              disabled={loginText} // 🔹 disable while logging in
+            >
+              {loginText ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />{" "}
+                  Logging in...
+                </>
+              ) : (
+                "Sign in with Google"
+              )}
+            </Button>
+          </div>
         ) : (
           <div className="text-center">
             <img
@@ -50,8 +54,13 @@ function Home({ user, handleGoogleLogin, loginText }) {
             />
             <h5>{user.displayName}</h5>
             <p className="text-muted">{user.email}</p>
-            <Button as={Link} to="/dashboard" className="w-100 mt-3">
-              Go to Dashboard
+            <Button
+              as={Link}
+              to="/profile"
+              className="w-100 mt-3"
+              variant="secondary"
+            >
+              Check Profile
             </Button>
           </div>
         )}
@@ -162,27 +171,13 @@ function App() {
         className="d-flex justify-content-center align-items-center"
         style={{ minHeight: "100vh" }}
       >
-        <Spinner animation="border" />
+        <Spinner animation="border" style={{ width: "4rem", height: "4rem" }} />
       </Container>
     );
   }
 
   return (
     <>
-      {/* <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand as={Link} to="/">My App</Navbar.Brand>
-          <Navbar as={Link} to="/profile">Profile</Navbar>
-          {user && (
-            <Nav className="ms-auto">
-              <Button variant="outline-light" size="sm" onClick={handleLogout}>
-                Logout
-              </Button>
-            </Nav>
-          )}
-        </Container>
-      </Navbar> */}
-
       <NavbarTop
         user={user}
         handleGoogleLogin={handleGoogleLogin}
@@ -193,7 +188,13 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home user={user} handleGoogleLogin={handleGoogleLogin} loginText={loginText}/>}
+          element={
+            <Home
+              user={user}
+              handleGoogleLogin={handleGoogleLogin}
+              loginText={loginText}
+            />
+          }
         />
         <Route
           path="/dashboard"
@@ -212,6 +213,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/scan" element={<ScanPage />} /> {/* 👈 new page */}
+
       </Routes>
     </>
   );

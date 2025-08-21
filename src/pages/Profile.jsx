@@ -144,7 +144,7 @@ function Profile() {
           )}
 
           <div className="text-center">
-          <Button type="submit" variant="primary" disabled={updating} className="w-50">
+          <Button type="submit" variant="secondary" disabled={updating} className="w-50">
             {updating ? "Saving..." : "Save Changes"}
           </Button>
           </div>

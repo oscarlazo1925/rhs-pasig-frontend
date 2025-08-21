@@ -1,33 +1,67 @@
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Spinner } from "react-bootstrap";
+import { useState } from "react";
 
 function AppNavbar({ user, handleGoogleLogin, handleLogout, loginText }) {
-  // console.log( user.email , 'user')
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar
+      // bg="secondary"
+      variant="secondary"
+      expand="lg"
+      expanded={expanded}
+      className="navbar-float rizal-color"
+    >
       <Container>
         {/* Brand */}
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/" onClick={() => setExpanded(false)}>
           RHS-PASIG
         </Navbar.Brand>
 
-        {/* Home beside MyApp */}
-        <Nav className="me-auto">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-        </Nav>
+        {/* Toggle */}
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          onClick={() => setExpanded(expanded ? false : true)}
+        />
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {user ? (
               <>
-                <Link to="/profile" className="nav-link">
+                <Link
+                  to="/"
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/profile"
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
                   Profile
                 </Link>
-                <Link to="#" className="nav-link" onClick={handleLogout}>
+
+                <Link
+                  to="/scan"
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
+                  Scan
+                </Link>
+
+
+
+                <Link
+                  to="#"
+                  className="nav-link"
+                  onClick={() => {
+                    handleLogout();
+                    setExpanded(false);
+                  }}
+                >
                   Logout
                 </Link>
               </>
@@ -37,14 +71,15 @@ function AppNavbar({ user, handleGoogleLogin, handleLogout, loginText }) {
                 className={`nav-link ${loginText ? "disabled-link" : ""}`}
                 onClick={(e) => {
                   if (loginText) {
-                    e.preventDefault(); // ⛔ stop multiple clicks while loading
+                    e.preventDefault();
                     return;
                   }
                   handleGoogleLogin();
+                  setExpanded(false);
                 }}
                 style={{
-                  pointerEvents: loginText ? "none" : "auto", // disable click
-                  opacity: loginText ? 0.6 : 1, // dim effect
+                  pointerEvents: loginText ? "none" : "auto",
+                  opacity: loginText ? 0.6 : 1,
                 }}
               >
                 {loginText ? (
